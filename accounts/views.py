@@ -34,4 +34,4 @@ def signup_view(request):
             return redirect('home')
 
     return render(request, 'accounts/signup.html')
-   
+          
