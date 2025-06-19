@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>الصفحة الرئيسية</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f6f8;
+      text-align: center;
+      padding: 50px;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    .auth-buttons {
+      margin-top: 30px;
+    }
+
+    .auth-buttons a {
+      display: inline-block;
+      padding: 12px 20px;
+      margin: 0 10px;
+      text-decoration: none;
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+    }
+
+    .auth-buttons a:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>مرحبًا بك في متجر الملابس</h1>
+
+  <div class="auth-buttons">
+    <a href="{% url 'accounts:signup' %}">إنشاء حساب</a>
+    <a href="{% url 'accounts:login' %}">تسجيل دخول</a>
+  </div>
+
+</body>
+</html>

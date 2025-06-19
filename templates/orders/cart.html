@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}سلة المشتريات{% endblock %}
+{% block content %}
+<h2>سلة المشتريات</h2>
+{% if cart_items %}
+  <ul class="list-group">
+    {% for item in cart_items %}
+      <li class="list-group-item d-flex justify-content-between">
+        {{ item.product.name }} - {{ item.quantity }} × {{ item.price }} ريال
+      </li>
+    {% endfor %}
+  </ul>
+  <div class="mt-3">
+    <strong>الإجمالي: {{ total_price }} ريال</strong><br>
+    <a href="{% url 'orders:checkout' %}" class="btn btn-success mt-2">الانتقال للدفع</a>
+  </div>
+{% else %}
+  <p>سلتك فارغة حالياً.</p>
+{% endif %}
+{% endblock %}
