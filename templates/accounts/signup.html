@@ -1,6 +1,91 @@
-<h2>تسجيل حساب جديد</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">تسجيل</button>
-</form>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>تسجيل حساب جديد</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f0f2f5;
+            padding: 20px;
+        }
+        .signup-container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 12px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #444;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        button {
+            background-color: #4A3AFF;
+            color: white;
+            padding: 12px;
+            border: none;
+            width: 100%;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #372acc;
+        }
+        .messages {
+            color: red;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="signup-container">
+    <h2>تسجيل حساب جديد</h2>
+
+    {% if messages %}
+      <div class="messages">
+        {% for message in messages %}
+          <p>{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+
+        <label for="id_username">اسم المستخدم</label>
+        <input type="text" name="username" id="id_username" required>
+
+        <label for="id_email">البريد الإلكتروني</label>
+        <input type="email" name="email" id="id_email" required>
+
+        <label for="id_password">كلمة المرور</label>
+        <input type="password" name="password" id="id_password" required>
+
+        <label for="id_address">العنوان</label>
+        <textarea name="address" id="id_address" rows="2"></textarea>
+
+        <label for="id_phone">رقم الجوال</label>
+        <input type="text" name="phone" id="id_phone">
+
+        <button type="submit">تسجيل</button>
+    </form>
+</div>
+
+</body>
+</html>
