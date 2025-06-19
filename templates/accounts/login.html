@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>تسجيل حساب جديد</title>
+  <title>تسجيل الدخول</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     * {
@@ -16,8 +16,8 @@
       margin: 0;
     }
 
-    .signup-container {
-      max-width: 450px;
+    .login-container {
+      max-width: 400px;
       margin: auto;
       background-color: #ffffff;
       padding: 30px 25px;
@@ -26,7 +26,7 @@
       text-align: right;
     }
 
-    .signup-container h2 {
+    .login-container h2 {
       text-align: center;
       color: #333;
       margin-bottom: 20px;
@@ -39,7 +39,7 @@
       font-weight: 500;
     }
 
-    input, textarea {
+    input {
       width: 100%;
       padding: 10px 12px;
       margin-bottom: 18px;
@@ -49,7 +49,7 @@
       font-size: 15px;
     }
 
-    input:focus, textarea:focus {
+    input:focus {
       border-color: #4A3AFF;
       outline: none;
     }
@@ -80,7 +80,7 @@
     }
 
     @media (max-width: 500px) {
-      .signup-container {
+      .login-container {
         padding: 20px 15px;
       }
     }
@@ -88,8 +88,8 @@
 </head>
 <body>
 
-<div class="signup-container">
-  <h2>تسجيل حساب جديد</h2>
+<div class="login-container">
+  <h2>تسجيل الدخول</h2>
 
   {% if messages %}
     <div class="messages">
@@ -105,19 +105,10 @@
     <label for="id_username">اسم المستخدم</label>
     <input type="text" name="username" id="id_username" required>
 
-    <label for="id_email">البريد الإلكتروني</label>
-    <input type="email" name="email" id="id_email" required>
-
     <label for="id_password">كلمة المرور</label>
     <input type="password" name="password" id="id_password" required>
 
-    <label for="id_address">العنوان</label>
-    <textarea name="address" id="id_address" rows="2"></textarea>
-
-    <label for="id_phone">رقم الجوال</label>
-    <input type="text" name="phone" id="id_phone">
-
-    <button type="submit">تسجيل</button>
+    <button type="submit">دخول</button>
   </form>
 </div>
 
