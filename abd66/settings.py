@@ -4,10 +4,10 @@ import os
 # المسار الرئيسي للمشروع
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# مفتاح الأمان (لا تشاركه في بيئة الإنتاج)
+# مفتاح الأمان - لا تستخدمه في الإنتاج
 SECRET_KEY = 'django-insecure-je9u@*cj@l8+r@=nk324^ujq^xmbl4k*wkl+2040usl5e-9ipq'
 
-# وضع التصحيح - لا تفعّله في الإنتاج
+# وضع التصحيح
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -21,7 +21,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # التطبيقات الداخلية
+    # تطبيقاتك الداخلية
     'catalog',
     'orders',
     'accounts',
@@ -39,14 +39,14 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# إعدادات الروابط
+# الروابط
 ROOT_URLCONF = 'abd66.urls'
 
-# إعدادات القوالب
+# القوالب
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],  # مجلد القوالب العام
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -59,10 +59,10 @@ TEMPLATES = [
     },
 ]
 
-# إعدادات WSGI
+# WSGI
 WSGI_APPLICATION = 'abd66.wsgi.application'
 
-# إعدادات قاعدة البيانات - SQLite
+# قاعدة البيانات
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -70,33 +70,30 @@ DATABASES = {
     }
 }
 
-# إعدادات التحقق من كلمة المرور
+# التحقق من كلمات المرور
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# إعدادات اللغة والمنطقة الزمنية
+# اللغة والتوقيت
 LANGUAGE_CODE = 'ar'
 TIME_ZONE = 'Asia/Riyadh'
-
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-# إعدادات الملفات الثابتة
+# الملفات الثابتة
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
-# المفتاح الافتراضي للحقل الأساسي
+# ملفات الوسائط (Media)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# الحقول الافتراضية
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
