@@ -1,7 +1,9 @@
-# catalog/urls.py
 from django.urls import path
-from django.views.generic import TemplateView
+from . import views
+
+app_name = 'catalog'
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='home.html'), name='home'),
+    path('', views.home_view, name='home'),  # ✅ هذا هو الحل الصحيح
+    path('products/', views.product_list_view, name='product_list'),
 ]

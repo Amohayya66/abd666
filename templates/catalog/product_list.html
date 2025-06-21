@@ -1,19 +1,27 @@
-{% extends 'base.html' %}
-{% block title %}المنتجات{% endblock %}
-{% block content %}
-<h2 class="mb-4">قائمة المنتجات</h2>
-<div class="row">
+<h2>المنتجات المتاحة</h2>
+
+{% if products %}
+<div class="product-grid">
   {% for product in products %}
-    <div class="col-md-4 mb-4">
-      <div class="card h-100">
-        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
-        <div class="card-body">
-          <h5 class="card-title">{{ product.name }}</h5>
-          <p class="card-text">{{ product.price }} ريال</p>
-          <a href="{% url 'catalog:product_detail' product.id %}" class="btn btn-primary">التفاصيل</a>
-        </div>
+    <div class="product-card">
+      {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+      {% else %}
+        <img src="https://via.placeholder.com/250x200?text=لا+يوجد+صورة" alt="صورة افتراضية">
+      {% endif %}
+      <div class="product-name">{{ product.name }}</div>
+      <div class="product-price">{{ product.price }} ريال</div>
+      <div class="product-category">التصنيف: {{ product.category.name }}</div>
+      <div class="product-status">
+        {% if product.available %}
+          <span>متاح</span>
+        {% else %}
+          <span style="color:red;">غير متاح</span>
+        {% endif %}
       </div>
     </div>
   {% endfor %}
 </div>
-{% endblock %}
+{% else %}
+  <p style="text-align:center;">لا توجد منتجات حالياً.</p>
+{% endif %}

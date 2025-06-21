@@ -2,47 +2,164 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>الصفحة الرئيسية</title>
+  <title>متجر الملابس</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
+      margin: 0;
+      padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f4f6f8;
-      text-align: center;
-      padding: 50px;
+      background: linear-gradient(to bottom, #f0f4f8, #ffffff);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
-    h1 {
+    header {
+      background-color: #222;
+      color: #fff;
+      padding: 20px 0;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+      letter-spacing: 1px;
+    }
+
+    main {
+      flex: 1;
+      padding: 40px 20px;
+    }
+
+    main h2 {
+      font-size: 2.5rem;
       color: #333;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    p.description {
+      font-size: 1.2rem;
+      color: #666;
+      text-align: center;
+      margin-bottom: 30px;
     }
 
     .auth-buttons {
-      margin-top: 30px;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 40px;
     }
 
     .auth-buttons a {
-      display: inline-block;
-      padding: 12px 20px;
-      margin: 0 10px;
-      text-decoration: none;
       background-color: #4CAF50;
-      color: white;
-      border-radius: 6px;
-      transition: background-color 0.3s ease;
+      color: #fff;
+      padding: 14px 24px;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: background-color 0.3s ease, transform 0.2s;
     }
 
     .auth-buttons a:hover {
-      background-color: #45a049;
+      background-color: #388e3c;
+      transform: translateY(-2px);
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .product-card {
+      background-color: white;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s;
+      text-align: center;
+    }
+
+    .product-card:hover {
+      transform: scale(1.03);
+    }
+
+    .product-card img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    .product-name {
+      font-size: 1.2rem;
+      margin: 10px 0;
+      color: #444;
+    }
+
+    .product-price {
+      color: #2ecc71;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .product-category {
+      font-size: 0.9rem;
+      color: #888;
+    }
+
+    .product-status {
+      font-size: 0.85rem;
+      color: #007bff;
+    }
+
+    footer {
+      background-color: #eee;
+      text-align: center;
+      padding: 15px;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    @media (max-width: 600px) {
+      main h2 {
+        font-size: 2rem;
+      }
+
+      .auth-buttons a {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
 <body>
 
-  <h1>مرحبًا بك في متجر الملابس</h1>
+  <header>
+    <h1>متجر الأناقة</h1>
+  </header>
 
-  <div class="auth-buttons">
-    <a href="{% url 'accounts:signup' %}">إنشاء حساب</a>
-    <a href="{% url 'accounts:login' %}">تسجيل دخول</a>
-  </div>
+  <main>
+    <h2>مرحبًا بك في متجر الملابس العصري</h2>
+    <p class="description">اكتشف أجمل التصاميم وأحدث الموديلات بأسعار منافسة وجودة عالية.</p>
+
+    <div class="auth-buttons">
+      <a href="{% url 'accounts:signup' %}">إنشاء حساب جديد</a>
+      <a href="{% url 'accounts:login' %}">تسجيل الدخول</a>
+    </div>
+
+    {% include 'catalog/product_list.html' %}
+  </main>
+
+  <footer>
+    &copy; 2025 جميع الحقوق محفوظة - متجر الأناقة
+  </footer>
 
 </body>
 </html>
