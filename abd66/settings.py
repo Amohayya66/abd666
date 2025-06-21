@@ -1,18 +1,25 @@
 from pathlib import Path
+import cloudinary  # ← استيراد مكتبة cloudinary
 import os
 
-# المسار الرئيسي للمشروع
+# إعداد Cloudinary الأساسي (مطلوب من المكتبة الأصلية)
+cloudinary.config( 
+  cloud_name = 'dcoutuiif', 
+  api_key = '713926589539725', 
+  api_secret = 'IYgGlpoD5CmUv5fR4GTYTnpJZHs' 
+)
+
+# المسار الرئيسي
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# مفتاح الأمان - لا تستخدمه في الإنتاج
-SECRET_KEY = 'django-insecure-je9u@*cj@l8+r@=nk324^ujq^xmbl4k*wkl+2040usl5e-9ipq'
+# مفتاح الأمان (لا تنشره في الإنتاج!)
+SECRET_KEY = 'django-insecure-REPLACE_THIS_WITH_A_SECURE_KEY'
 
-# وضع التصحيح
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# التطبيقات المثبتة
+# التطبيقات
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -21,17 +28,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # تطبيقاتك الداخلية
+    # تطبيقاتك
     'catalog',
     'orders',
     'accounts',
+
+    # Cloudinary
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
-# الميدلوير
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -39,14 +48,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# روابط المشروع
 ROOT_URLCONF = 'abd66.urls'
 
-# إعدادات القوالب
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -59,7 +66,6 @@ TEMPLATES = [
     },
 ]
 
-# WSGI
 WSGI_APPLICATION = 'abd66.wsgi.application'
 
 # قاعدة البيانات
@@ -70,12 +76,14 @@ DATABASES = {
     }
 }
 
-# تحقق كلمات المرور
+# التحقق من كلمات المرور
 AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
 ]
 
 # اللغة والتوقيت
@@ -87,13 +95,22 @@ USE_TZ = True
 
 # الملفات الثابتة
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
+STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# ملفات الوسائط (للصور)
+# إعدادات Cloudinary
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dcoutuiif',
+    'API_KEY': '713926589539725',
+    'API_SECRET': 'IYgGlpoD5CmUv5fR4GTYTnpJZHs',
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+# إعدادات الوسائط
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# الحقول الافتراضية
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# إعدادات الرسائل
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}
