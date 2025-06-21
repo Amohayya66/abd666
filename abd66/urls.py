@@ -7,7 +7,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # روابط التطبيقات
-    path('', include('catalog.urls')),
+    path('', include('catalog.urls')),  # يتطلب أن يحتوي catalog/urls.py على مسار فارغ ''
     path('orders/', include('orders.urls')),
     path('accounts/', include('accounts.urls')),
 ]
