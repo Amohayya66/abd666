@@ -1,8 +1,9 @@
 from pathlib import Path
-import cloudinary  # ← استيراد مكتبة cloudinary
+import cloudinary
 import os
+import dj_database_url  # ← استخدم مكتبة لتحليل DATABASE_URL
 
-# إعداد Cloudinary الأساسي (مطلوب من المكتبة الأصلية)
+# إعداد Cloudinary
 cloudinary.config( 
   cloud_name = 'dcoutuiif', 
   api_key = '713926589539725', 
@@ -12,12 +13,14 @@ cloudinary.config(
 # المسار الرئيسي
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# مفتاح الأمان (لا تنشره في الإنتاج!)
-SECRET_KEY = 'django-insecure-REPLACE_THIS_WITH_A_SECURE_KEY'
+# مفتاح الأمان
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-REPLACE_THIS_WITH_A_SECURE_KEY')
 
-DEBUG = True
+# الوضع التطويري
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = []
+# السماح بالاستضافة
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split() if not DEBUG else []
 
 # التطبيقات
 INSTALLED_APPS = [
@@ -27,13 +30,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    # تطبيقاتك
     'catalog',
     'orders',
     'accounts',
-
-    # Cloudinary
     'cloudinary',
     'cloudinary_storage',
 ]
@@ -68,22 +67,27 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'abd66.wsgi.application'
 
-# قاعدة البيانات
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# إعداد قواعد البيانات
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.getenv('DATABASE_URL'),
+            conn_max_age=600,
+            ssl_require=True
+        )
+    }
 
 # التحقق من كلمات المرور
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
 ]
 
 # اللغة والتوقيت
@@ -98,7 +102,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# إعدادات Cloudinary
+# Cloudinary إعدادات
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dcoutuiif',
     'API_KEY': '713926589539725',
@@ -108,6 +112,7 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # إعدادات الوسائط
 MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # إعدادات الرسائل
 from django.contrib.messages import constants as messages
