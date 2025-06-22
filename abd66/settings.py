@@ -16,7 +16,7 @@ cloudinary.config(
 
 # ====== أمان ======
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-default-key')
-DEBUG = False
+DEBUG = True
 
 if not DEBUG:
     hosts = os.getenv('ALLOWED_HOSTS', '')
