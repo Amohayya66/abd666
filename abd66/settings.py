@@ -14,15 +14,19 @@ cloudinary.config(
     api_secret=os.getenv('CLOUDINARY_API_SECRET')
 )
 
-# ====== أمان ======
+# ====== إعدادات الأمان ======
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-default-key')
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'True').lower() in ['true', '1']
 
-if not DEBUG:
+# ====== ALLOWED_HOSTS ======
+if DEBUG:
+    ALLOWED_HOSTS = []
+else:
     hosts = os.getenv('ALLOWED_HOSTS', '')
     ALLOWED_HOSTS = [host.strip() for host in hosts.split(',') if host.strip()]
-else:
-    ALLOWED_HOSTS = []
+    # في حال لم يتم توفير متغير ALLOWED_HOSTS بشكل صحيح
+    if not ALLOWED_HOSTS:
+        ALLOWED_HOSTS = ['.onrender.com']
 
 # ====== التطبيقات ======
 INSTALLED_APPS = [
@@ -54,10 +58,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# ====== العناوين ======
+# ====== إعدادات العناوين ======
 ROOT_URLCONF = 'abd66.urls'
 
-# ====== القوالب ======
+# ====== إعدادات القوالب ======
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -93,7 +97,7 @@ else:
         )
     }
 
-# ====== كلمات المرور ======
+# ====== التحقق من كلمات المرور ======
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -115,7 +119,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# ====== Cloudinary Storage ======
+# ====== Cloudinary ======
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
     'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
