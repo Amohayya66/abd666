@@ -2,26 +2,27 @@ from pathlib import Path
 import os
 import cloudinary
 import dj_database_url
+from django.contrib.messages import constants as messages
 
-# ====== المسار الأساسي للمشروع ======
+# ====== المسار الأساسي ======
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# ====== إعدادات Cloudinary من .env ======
+# ====== إعدادات Cloudinary ======
 cloudinary.config(
-    cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME', 'dcoutuiif'),
-    api_key=os.getenv('CLOUDINARY_API_KEY', '713926589539725'),
-    api_secret=os.getenv('CLOUDINARY_API_SECRET', 'IYgGlpoD5CmUv5fR4GTYTnpJZHs')
+    cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME'),
+    api_key=os.getenv('CLOUDINARY_API_KEY'),
+    api_secret=os.getenv('CLOUDINARY_API_SECRET')
 )
 
-# ====== أمان وبيئة ======
-SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-REPLACE_THIS_WITH_A_SECURE_KEY')
+# ====== أمان ======
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-default-key')
 DEBUG = False
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',') if not DEBUG else []
-
 
 if not DEBUG:
     hosts = os.getenv('ALLOWED_HOSTS', '')
     ALLOWED_HOSTS = [host.strip() for host in hosts.split(',') if host.strip()]
+else:
+    ALLOWED_HOSTS = []
 
 # ====== التطبيقات ======
 INSTALLED_APPS = [
@@ -31,10 +32,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     # تطبيقات المشروع
     'catalog',
     'orders',
     'accounts',
+
     # Cloudinary
     'cloudinary',
     'cloudinary_storage',
@@ -51,9 +54,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# ====== عناوين المشروع ======
+# ====== العناوين ======
 ROOT_URLCONF = 'abd66.urls'
 
+# ====== القوالب ======
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -89,7 +93,7 @@ else:
         )
     }
 
-# ====== التحقق من كلمات المرور ======
+# ====== كلمات المرور ======
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -107,20 +111,19 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# ====== إعداد Cloudinary ======
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME', 'dcoutuiif'),
-    'API_KEY': os.getenv('CLOUDINARY_API_KEY', '713926589539725'),
-    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET', 'IYgGlpoD5CmUv5fR4GTYTnpJZHs'),
-}
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
 # ====== الوسائط ======
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# ====== Cloudinary Storage ======
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 # ====== الرسائل ======
-from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
