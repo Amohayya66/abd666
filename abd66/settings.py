@@ -17,16 +17,16 @@ cloudinary.config(
 # ====== إعدادات الأمان ======
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-default-key')
 DEBUG = os.getenv('DEBUG', 'True').lower() in ['true', '1']
-
 # ====== ALLOWED_HOSTS ======
 if DEBUG:
     ALLOWED_HOSTS = []
 else:
-    hosts = os.getenv('ALLOWED_HOSTS', '')
-    ALLOWED_HOSTS = [host.strip() for host in hosts.split(',') if host.strip()]
-    # في حال لم يتم توفير متغير ALLOWED_HOSTS بشكل صحيح
+    raw_hosts = os.getenv('ALLOWED_HOSTS', '')
+    ALLOWED_HOSTS = [host.strip() for host in raw_hosts.split(',') if host.strip()]
+
+    # تأكد من وجود نطاق Render على الأقل
     if not ALLOWED_HOSTS:
-        ALLOWED_HOSTS = ['.onrender.com']
+        ALLOWED_HOSTS = ['abd666.onrender.com']
 
 # ====== التطبيقات ======
 INSTALLED_APPS = [
@@ -130,4 +130,20 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 # ====== الرسائل ======
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
+}
+import logging
+import logging.config
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'WARNING',
+    },
 }
