@@ -1,7 +1,6 @@
 from pathlib import Path
 import os
 import cloudinary
-import dj_database_url
 from django.contrib.messages import constants as messages
 
 # ====== المسار الأساسي ======
@@ -17,14 +16,13 @@ cloudinary.config(
 # ====== إعدادات الأمان ======
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-default-key')
 DEBUG = os.getenv('DEBUG', 'True').lower() in ['true', '1']
+
 # ====== ALLOWED_HOSTS ======
 if DEBUG:
     ALLOWED_HOSTS = []
 else:
     raw_hosts = os.getenv('ALLOWED_HOSTS', '')
     ALLOWED_HOSTS = [host.strip() for host in raw_hosts.split(',') if host.strip()]
-
-    # تأكد من وجود نطاق Render على الأقل
     if not ALLOWED_HOSTS:
         ALLOWED_HOSTS = ['abd666.onrender.com']
 
@@ -90,11 +88,17 @@ if DEBUG:
     }
 else:
     DATABASES = {
-        'default': dj_database_url.config(
-            default=os.getenv('DATABASE_URL'),
-            conn_max_age=600,
-            ssl_require=True
-        )
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'abd66_db_86j7',
+            'USER': 'abd66_user',
+            'PASSWORD': 'pMDXITqNhQeKW8tXtFsrwAbhkH0niOUm',
+            'HOST': 'dpg-d1c1g3ur433s7380nmng-a.oregon-postgres.render.com',
+            'PORT': '5432',
+            'OPTIONS': {
+                'sslmode': 'require'
+            }
+        }
     }
 
 # ====== التحقق من كلمات المرور ======
@@ -131,6 +135,8 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
+
+# ====== تسجيل الأخطاء ======
 import logging
 import logging.config
 
