@@ -2,6 +2,7 @@ from pathlib import Path
 import os
 import cloudinary
 from django.contrib.messages import constants as messages
+import logging
 
 # ====== المسار الأساسي ======
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -76,6 +77,7 @@ TEMPLATES = [
     },
 ]
 
+# ====== WSGI ======
 WSGI_APPLICATION = 'abd66.wsgi.application'
 
 # ====== قاعدة البيانات ======
@@ -123,7 +125,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# ====== Cloudinary ======
+# ====== Cloudinary Storage ======
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
     'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
@@ -137,9 +139,6 @@ MESSAGE_TAGS = {
 }
 
 # ====== تسجيل الأخطاء ======
-import logging
-import logging.config
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
